@@ -1,4 +1,3 @@
-```markdown
 # Flask Application Deployment Guide
 
 This guide will walk you through the process of deploying and testing a Flask application on Kubernetes.
@@ -14,7 +13,7 @@ This guide will walk you through the process of deploying and testing a Flask ap
 1. Clone the repository containing your Flask application code:
 
    ```bash
-   git clone <repository_url>
+   git clone https://github.com/waeldalaous/app.git
    ```
 
 2. Navigate to the directory containing your Flask application code:
