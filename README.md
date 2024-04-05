@@ -68,10 +68,19 @@ This guide will walk you through the process of deploying and testing a Flask ap
 ## Scalabilty and self-healing
 In the deployment file, I have added a readiness and liveness probes.
 
-1. In order to ensure that the application is ready to accept requests, I have configured a HTTP readiness probe 
+### Liveness Probe
+The `livenessProbe` configuration is used to determine whether the application is running properly. Kubernetes periodically sends requests to the specified endpoint to check the health of the application. If the application fails to respond within a specified time period or returns an error status code, Kubernetes restarts the container.
 
-   ```bash
+   ```yaml
+      livenessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 5
    ```
+Kubernetes should wait 30 seconds before performing the first liveness probe (initialDelaySeconds: 30)
 ## Cleanup
 
 1. To clean up the resources created during deployment, you can delete the Kubernetes deployment and service:
