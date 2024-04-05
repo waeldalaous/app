@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: flask-app-netpol
+spec:
+  podSelector:
+    matchLabels:
+      app: flask
+  policyTypes:
+  - Ingress
+  - Egress
+  # Allow traffic from the load balancer's IP range
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 172.16.0.0/16 # example of IP range of LB
+  # Allow inbound traffic from pods labled monitoring (for monitoring purpose)
+  - from:
+    - podSelector:
+        matchLabels:
+          app: monitoring
+  # Allow outbound traffic to the load balancer's IP address
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 172.16.0.10 # an example of IP address of LB
+  # Allow outbound traffic to pods labled monitoring (for monitoring purpose)
+  - to:
+    - podSelector:
+        matchLabels:
+          app: monitoring
+    
