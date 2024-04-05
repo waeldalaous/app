@@ -27,3 +27,22 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build image from Dockerfile
+      run: |
+        docker build -t waeldalaous/app:v${{ github.run_id }}
+
+    - name: Push Image to ECR REGISTRY
+      run: |
+        docker push waeldalaous/app:v${{ github.run_id }}
+
+    - name: Set up YQ command
+      run: |
+        sudo snap install yq --channel=v3/stable
+
+    - name: Edit manifests with new image
+      run: |
+          yq w -i ./manifests/deployment.yaml spec.template.spec.container[0].image 'waeldalaous/app:v${{ github.run_id }}'
+    
+
+    
