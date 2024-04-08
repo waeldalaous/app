@@ -107,7 +107,7 @@ Before using Horizontal Pod Autoscaler (HPA), ensure that the Metrics Server is 
 ### Configuration Details
 In our case, the scale of the application is based on the CPU utilization.
    ```yaml
-   targetCPUUtilizationPercentage: 50
+   averageUtilization: 50
    ``` 
 This specifies the target average CPU utilization across all the pods in the Deployment. The HPA will adjust the number of replicas to try to maintain this target CPU utilization. Here, it's set to 50, meaning the HPA will aim for an average CPU utilization of 50% across all pods.
 
